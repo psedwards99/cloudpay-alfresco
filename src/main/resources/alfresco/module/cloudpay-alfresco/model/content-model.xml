@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model name="acme:contentModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+<model name="cp:contentModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
 
     <!-- Optional meta-data about the model -->
-    <description>Sample Document Model</description>
-    <author>My Name</author>
+    <description>CloudPay Document Model</description>
+    <author>SynApps Solutions</author>
     <version>1.0</version>
 
     <imports>
@@ -15,13 +15,13 @@
         <import uri="http://www.alfresco.org/model/system/1.0" prefix="sys"/>
     </imports>
 
-    <!-- Custom namespace for the ACME company -->
+    <!-- Custom namespace for CloudPay -->
     <namespaces>
-        <namespace uri="http://www.acme.org/model/content/1.0" prefix="acme"/>
+        <namespace uri="http://www.cloudpay.com/model/content/1.0" prefix="cp"/>
     </namespaces>
 
     <constraints>
-        <constraint name="acme:securityClassificationOptions" type="LIST">
+        <constraint name="cp:securityClassificationOptions" type="LIST">
             <parameter name="allowedValues">
                 <list>
                     <value></value>
@@ -41,33 +41,52 @@
 
     <types>
         <!--
-            ACME Enterprise-wide Document root type.
+            CloudPay Enterprise-wide Document root type.
             All other custom document types would extend this one.
         -->
-        <type name="acme:document">
-            <title>Sample Document Type</title>
+        <type name="cp:document">
+            <title>CloudPay Document</title>
             <parent>cm:content</parent>
             <properties>
-                <property name="acme:documentId">
-                    <title>Document Identification Number</title>
+                <property name="cp:documentId">
+                    <title>Document Reference Number</title>
                     <type>d:text</type>
                 </property>
             </properties>
             <mandatory-aspects>
-                <aspect>acme:securityClassified</aspect>
+                <aspect>cp:classification</aspect>
             </mandatory-aspects>
         </type>
+
+        <!--
+            CloudPay employee document
+        -->
+        <type name="cp:employeeDocument">
+            <title>Employee Document</title>
+            <parent>cp:document</parent>
+            <properties>
+                <!-- The employee's employer (CloudPay's client) -->
+                <property name="cp:employerId">
+                    <title>Employer Id</title>
+                    <type>d:text</type>
+                </property>
+
+                <!-- The employee's Id -->
+                <property name="cp:employeeNumber">
+                    <title>Employee Number</title>
+                    <type>d:text</type>
+                </property>
+            </properties>
+        </type>
+
     </types>
 
     <aspects>
-        <!-- A document can have security classification applied and
-             faceted search is specifically enabled for best performance and we change
-             default index config to not tokenize the value. -->
-        <aspect name="acme:securityClassified">
-            <title>ACME Security Classified</title>
+        <aspect name="cp:classification">
+            <title>CloudPay Security Classified</title>
             <description>Content has been security classified</description>
             <properties>
-                <property name="acme:securityClassification">
+                <property name="cp:securityClassification">
                     <type>d:text</type>
                     <index enabled="true">
                         <atomic>true</atomic>
@@ -75,8 +94,54 @@
                         <tokenised>false</tokenised>
                     </index>
                     <constraints>
-                        <constraint ref="acme:securityClassificationOptions"/>
+                        <constraint ref="cp:securityClassificationOptions"/>
                     </constraints>
+                </property>
+            </properties>
+        </aspect>
+
+        <aspect name="cp:payslip">
+            <title>Payslip</title>
+            <description>Employee Payslip</description>
+            <properties>
+                <property name="cp:payslipDate">
+                    <type>d:date</type>
+                    <index enabled="true">
+                        <atomic>true</atomic>
+                        <stored>false</stored>
+                        <tokenised>false</tokenised>
+                    </index>
+                </property>
+            </properties>
+        </aspect>
+
+        <aspect name="cp:clientFolder">
+            <title>Client Folder</title>
+            <description>Client Folder</description>
+            <properties>
+                <property name="cp:clientId">
+                    <type>d:text</type>
+                    <index enabled="true">
+                        <atomic>true</atomic>
+                        <stored>false</stored>
+                        <tokenised>false</tokenised>
+                    </index>
+                </property>
+                <property name="cp:clientName">
+                    <type>d:text</type>
+                    <index enabled="true">
+                        <atomic>true</atomic>
+                        <stored>false</stored>
+                        <tokenised>false</tokenised>
+                    </index>
+                </property>
+                <property name="cp:clientLocation">
+                    <type>d:text</type>
+                    <index enabled="true">
+                        <atomic>true</atomic>
+                        <stored>false</stored>
+                        <tokenised>false</tokenised>
+                    </index>
                 </property>
             </properties>
         </aspect>

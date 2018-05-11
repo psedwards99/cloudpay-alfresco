@@ -150,6 +150,21 @@
                             <type>amp</type>
                         </moduleDependency>
 
+                        <!--
+                        <moduleDependency>
+                            <groupId>org.alfresco.consulting</groupId>
+                            <artifactId>dynastore-repo-base</artifactId>
+                            <version>1.3.3</version>
+                            <type>amp</type>
+                        </moduleDependency>
+
+                        <moduleDependency>
+                            <groupId>org.alfresco.consulting</groupId>
+                            <artifactId>dynastore-enterprise-repo</artifactId>
+                            <version>1.3.3</version>
+                            <type>amp</type>
+                        </moduleDependency>
+                        -->
                         <!-- Bring in this JAR project, need to be included here, otherwise resources from META-INF
                              will not be loaded, such as the test.html page
                         -->
